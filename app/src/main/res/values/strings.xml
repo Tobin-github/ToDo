@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">To Do</string>
+
+
+    <string name="menu_inventory">清单</string>
+    <string name="menu_schedule">日程</string>
+    <string name="menu_components">小组件</string>
+    <string name="menu_accounts">记账</string>
+    <string name="menu_my">我的</string>
+
+
+    <string name="login_page_title">登录页</string>
+    <string name="et_username_hilt">请输入用户名：</string>
+    <string name="et_password_hilt">请输入密码：</string>
+    <string name="tv_register">注册</string>
+    <string name="tv_login">登录</string>
+    <string name="tv_no_login">未登录</string>
+
+</resources>

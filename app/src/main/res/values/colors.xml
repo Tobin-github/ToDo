@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="text_main">#2c2c2c</color>
+    <color name="text_second">#8a8a8a</color>
+
+    <color name="wheel_text_color">#727272</color>
+    <color name="wheel_selected_text_color">#1db0b8</color>
+    <color name="wheel_highlight_color">#00000000</color>
+    <color name="wheel_divider_color">#80808080</color>
+</resources>
