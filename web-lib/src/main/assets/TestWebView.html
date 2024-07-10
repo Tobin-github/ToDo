@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Test</title>
+		<script src="//cdn.bootcdn.net/ajax/libs/vue/2.6.12/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var dj = {
+				callback: function(result){
+
+					<!-- alert(JSON.stringify(result));-->
+					const textResult = document.querySelector('#textResult');
+					textResult.value = JSON.stringify(result);
+				},
+				
+				dispatchEvent: function(result){
+					const textResult = document.querySelector('#textResult');
+					textResult.value = JSON.stringify(result);
+				}
+			}
+			
+			function callAndroid() {
+				var obj = {
+					message: '来自js的toast',
+					callback: 'showToast'
+				};
+				window.android.post('showToast',JSON.stringify(obj));
+			}
+
+			function showDialog(){
+				var obj2 = {
+					title: '来自js的Dialog',
+					content: '前方高能！',
+					canceledOutside: '1',
+					callback: 'showDialog',
+					buttonCount: '1'
+				};
+				window.android.post('showDialog',JSON.stringify(obj2));
+			}
+			
+		</script>
+	</head>
+	<body>
+		<button onclick="callAndroid()">JS调用Android方法</button>
+		<br />
+		<br />
+		<button onclick="showDialog()">来自js的Dialog</button>
+		<br />
+		<br />
+		<textarea style="height: 500px;" id="textResult"></textarea>
+	</body>
+</html>

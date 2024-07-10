@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        maven("https://maven.aliyun.com/repository/gradle-plugin")
         google {
             content {
                 includeGroupByRegex("com\\.android.*")
@@ -41,3 +42,4 @@ include(":module-gallery")
 include(":framework-lib")
 include(":module-ui")
 include(":app-compose")
+include(":web-lib")

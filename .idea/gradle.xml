@@ -22,6 +22,7 @@
             <option value="$PROJECT_DIR$/module-ui" />
             <option value="$PROJECT_DIR$/navigation-tab" />
             <option value="$PROJECT_DIR$/shared" />
+            <option value="$PROJECT_DIR$/web-lib" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
