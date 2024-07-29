@@ -77,7 +77,7 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
 
-    implementation("org.bouncycastle:bcpkix-jdk15on:1.64")
-    implementation("androidx.metrics:metrics-performance:1.0.0-beta01")
+    implementation(libs.bcpkix.jdk15on)
+    implementation(libs.androidx.metrics.performance)
 
 }
