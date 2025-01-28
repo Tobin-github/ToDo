@@ -125,6 +125,8 @@ class MainActivity : BaseActivity() {
 //        }
 //        val jankStats = JankStats.createAndTrack(window, listener)
 //        jankStats.isTrackingEnabled = true
+
+
     }
 
     private fun checkPermission() {
@@ -150,8 +152,7 @@ class MainActivity : BaseActivity() {
                         multiplePermission(arrayOf(WRITE_EXTERNAL_STORAGE, ACCESS_COARSE_LOCATION))
 
                 } else {
-                    Toast.makeText(this@MainActivity, "请开启存储读写权限！", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@MainActivity, "请开启存储读写权限！", Toast.LENGTH_SHORT).show()
                 }
             }
 

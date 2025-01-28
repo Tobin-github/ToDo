@@ -1,24 +1,23 @@
 package top.tobin.accounting
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import top.tobin.accounting.databinding.FragmentAccountingBinding
 import top.tobin.accounting.databinding.ItemAccountingListBinding
+import top.tobin.common.base.BaseFragment
 import top.tobin.common.ui.listAdapter
 import top.tobin.common.utils.LogUtil
 import top.tobin.shared.model.AccountingModel
-import top.tobin.common.viewbinding.bindingView
+import top.tobin.common.viewbinding.binding
 
 @AndroidEntryPoint
-class AccountingFragment : Fragment(R.layout.fragment_accounting) {
+class AccountingFragment : BaseFragment() {
 
-    private val binding: FragmentAccountingBinding by bindingView()
+    private val binding: FragmentAccountingBinding by binding()
     private val viewModel: AccountingViewModel by viewModels()
 
     private val adapter = listAdapter<AccountingModel, ItemAccountingListBinding>(
@@ -29,26 +28,19 @@ class AccountingFragment : Fragment(R.layout.fragment_accounting) {
         this.binding.tvUser.text = ""
     }
 
-    override fun onResume() {
-        super.onResume()
-        immersionBar {
-            statusBarDarkFont(true)
-        }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setOnApplyWindowInsets(view)
         binding.rvAccounting.adapter = adapter
-
         viewModel.accountingList.observe(viewLifecycleOwner) {
             LogUtil.e("observe  accountingList size:${it.size} content: $it")
             adapter.submitList(it)
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
         }
     }
 

@@ -8,7 +8,7 @@ import java.util.LinkedList
 
 /**
  * Created by Tobin on 2022/10/8.
- * Email: junbin.li@thundersoft.com
+ * Email: junbin.li@qq.com
  */
 class WeekGridLayout : GridLayout {
     constructor(context: Context?) : super(context) {

@@ -65,8 +65,4 @@ class MyFragment : BaseFragment() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        setStatusBarDarkFont(true)
-    }
 }

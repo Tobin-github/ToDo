@@ -45,6 +45,12 @@ dependencies {
     implementation(project(":navigation-tab"))
     implementation(project(":component-service"))
     implementation(project(":shared"))
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.lifecycle.livedata.ktx)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.fragment.ktx)
 
     // Test
     testImplementation(libs.junit)
@@ -54,4 +60,9 @@ dependencies {
     // hilt https://dagger.dev/hilt/gradle-setup
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.ui)
+
 }

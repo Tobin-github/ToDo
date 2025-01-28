@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.graphics.ColorUtils
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.palette.graphics.Palette
@@ -20,13 +19,14 @@ import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import top.tobin.common.base.BaseFragment
 import top.tobin.common.ui.LoadingDialog
 import top.tobin.common.utils.LogUtil
 import top.tobin.gallery.databinding.FragmentGalleryBinding
 import top.tobin.common.viewbinding.binding
 
 @AndroidEntryPoint
-class GalleryFragment : Fragment() {
+class GalleryFragment : BaseFragment() {
 
     private val binding: FragmentGalleryBinding by binding()
     private val viewModel: GalleryViewModel by viewModels()
@@ -74,9 +74,7 @@ class GalleryFragment : Fragment() {
                     }
 
                     is GalleryUiState.ImmersionBar -> {
-                        immersionBar {
-                            statusBarDarkFont(it.statusBarDarkFont)
-                        }
+                        setStatusBarDarkFont(it.statusBarDarkFont)
                     }
 
                     is GalleryUiState.Loading -> {
