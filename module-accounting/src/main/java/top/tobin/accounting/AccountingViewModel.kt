@@ -31,9 +31,13 @@ class AccountingViewModel @Inject constructor(
 
         viewModelScope.launch {
             accountingRepository.fetchAccountList().collectLatest {
-                LogUtil.e("======================= $it")
+                LogUtil.e(TAG,"AccountingRepository fetchAccountList: $it")
             }
         }
+    }
+
+    companion object {
+        const val TAG = "AccountingViewModel"
     }
 
 }

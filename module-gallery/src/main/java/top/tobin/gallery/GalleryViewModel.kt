@@ -31,6 +31,10 @@ class GalleryViewModel @Inject constructor(
     private val galleryRepository: IGalleryRepository
 ) : ViewModel() {
 
+    companion object {
+        const val TAG = "GalleryViewModel"
+    }
+
     private val _uiState = MutableStateFlow<GalleryUiState>(GalleryUiState.Idle)
     val uiState: StateFlow<GalleryUiState> = _uiState.asStateFlow()
 
@@ -45,7 +49,7 @@ class GalleryViewModel @Inject constructor(
     fun updatePicture() {
         viewModelScope.launch {
             galleryRepository.fetchRandPicture().onStart {
-                LogUtil.e("=======  fetchRandPicture onStart")
+                LogUtil.i(TAG, "GalleryRepository fetchRandPicture onStart")
                 _uiState.value = GalleryUiState.Loading(true)
             }.onCompletion {
                 _uiState.value = GalleryUiState.Loading(false)

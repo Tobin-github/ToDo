@@ -15,7 +15,6 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -47,9 +46,16 @@ class GalleryFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         initClickListener()
         observeUiState()
-        immersionBar {
-            statusBarDarkFont(true)
-        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setStatusBarDarkFont(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setStatusBarDarkFont(false)
     }
 
     private fun initClickListener() {
