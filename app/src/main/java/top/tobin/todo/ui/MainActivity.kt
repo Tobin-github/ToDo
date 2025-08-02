@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.metrics.performance.JankStats
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.awaitClose
@@ -87,8 +88,8 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBottomNavigation()
-        checkPermission()
-        initJankStats()
+//        checkPermission()
+//        initJankStats()
     }
 
     override fun onResume() {
@@ -117,16 +118,14 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initJankStats() {
-//        val listener = JankStats.OnFrameListener { frameData ->
-//            // 一个真正的应用程序可以做一些更有趣的事情，比如将信息写入本地存储，然后再报告。
-//            if (frameData.isJank) {
-//                LogUtil.d("JankStatsSample", frameData.toString())
-//            }
-//        }
-//        val jankStats = JankStats.createAndTrack(window, listener)
-//        jankStats.isTrackingEnabled = true
-
-
+        val listener = JankStats.OnFrameListener { frameData ->
+            // 一个真正的应用程序可以做一些更有趣的事情，比如将信息写入本地存储，然后再报告。
+            if (frameData.isJank) {
+                LogUtil.d("JankStatsSample", frameData.toString())
+            }
+        }
+        val jankStats = JankStats.createAndTrack(window, listener)
+        jankStats.isTrackingEnabled = true
     }
 
     private fun checkPermission() {
@@ -152,7 +151,8 @@ class MainActivity : BaseActivity() {
                         multiplePermission(arrayOf(WRITE_EXTERNAL_STORAGE, ACCESS_COARSE_LOCATION))
 
                 } else {
-                    Toast.makeText(this@MainActivity, "请开启存储读写权限！", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "请开启存储读写权限！", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 

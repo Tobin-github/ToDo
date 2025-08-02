@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt.android)
 }
@@ -35,17 +35,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
-    buildFeatures {
-        viewBinding = true
-    }
-
-    kapt {
-        correctErrorTypes = true
-    }
 }
 
 dependencies {
@@ -71,7 +67,7 @@ dependencies {
 
     // hilt https://dagger.dev/hilt/gradle-setup
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // navigation
     implementation(libs.androidx.navigation.ui.ktx)

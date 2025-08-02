@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.ksp)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt.android)
 }
@@ -14,13 +14,11 @@ android {
         minSdk = rootProject.extra["sdk_min_version"] as Int
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-//        consumerProguardFiles("consumer-rules.pro")
-
         ndk {
             abiFilters.add("armeabi-v7a")
             abiFilters.add("arm64-v8a")
-//            abiFilters.add("x86_64")
-//            abiFilters.add("x86")
+            abiFilters.add("x86_64")
+            abiFilters.add("x86")
         }
     }
 
@@ -71,7 +69,7 @@ dependencies {
 
     // hilt https://dagger.dev/hilt/gradle-setup
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     /**
      * coroutines
