@@ -46,6 +46,7 @@ bcpkixJdk15on = "1.67"
 activityCompose = "1.8.2"
 composeBom = "2025.05.00"
 legacySupportV4 = "1.0.0"
+activityVersion = "1.8.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -140,6 +141,7 @@ mmkv = { module = "com.tencent:mmkv-static", version.ref = "mmkv" }
 baseRecyclerViewAdapterHelper4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version.ref = "baseRecyclerViewAdapterHelper4" }
 bcpkix-jdk15on = { module = "org.bouncycastle:bcpkix-jdk15on", version.ref = "bcpkixJdk15on" }
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activityVersion" }
 
 [bundles]
 
@@ -159,7 +161,7 @@ androidx = [
     "androidx-work-runtime-ktx",
     "androidx-multidex",
     "androidx-palette",
-    #"androidx-draganddrop"
+    "androidx-draganddrop"
 ]
 
 [plugins]

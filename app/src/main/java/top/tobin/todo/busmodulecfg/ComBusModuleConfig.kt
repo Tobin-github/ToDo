@@ -1,14 +1,15 @@
 package top.tobin.todo.busmodulecfg
 
 import top.tobin.component.constant.IBusCompConst
+import java.util.ArrayList
 
 /**
  * 通用渠道配置
  */
 class ComBusModuleConfig : IBusModuleConfig {
-    private var busModules: MutableList<BusModule> = ArrayList()
+    private var busModules: ArrayList<BusModule> = ArrayList()
     override fun getBusModules(): List<BusModule> {
-        if (busModules.size == 0) {
+        if (busModules.isEmpty()) {
             busModules.add(
                 BusModule(
                     0,

@@ -32,7 +32,6 @@ public interface IMediaComp {
     /**
      * 暂停
      */
-
     int pause();
 
     /**
@@ -42,8 +41,6 @@ public interface IMediaComp {
     default boolean isPlay() {
         return false;
     }
-
-    ;
 
     /**
      * 是否收藏

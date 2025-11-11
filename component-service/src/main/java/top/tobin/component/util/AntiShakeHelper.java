@@ -21,6 +21,5 @@ public class AntiShakeHelper {
             Log.d(TAG, "click too fast:" + msg);
             return false;
         }
-
     }
 }

@@ -50,12 +50,10 @@ class GalleryFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        setStatusBarDarkFont(true)
     }
 
     override fun onPause() {
         super.onPause()
-        setStatusBarDarkFont(false)
     }
 
     private fun initClickListener() {
@@ -77,10 +75,6 @@ class GalleryFragment : BaseFragment() {
                         LogUtil.d(TAG, "randPicture: ${it.bingModel}")
                         binding.tvTestContent.text = it.bingModel.title
                         loadPicture(it.bingModel.url, binding.ivRandPicture)
-                    }
-
-                    is GalleryUiState.ImmersionBar -> {
-                        setStatusBarDarkFont(it.statusBarDarkFont)
                     }
 
                     is GalleryUiState.Loading -> {
@@ -109,7 +103,10 @@ class GalleryFragment : BaseFragment() {
             }
 
             override fun onResourceReady(
-                resource: Bitmap, model: Any, target: Target<Bitmap>?, dataSource: DataSource,
+                resource: Bitmap,
+                model: Any,
+                target: Target<Bitmap>?,
+                dataSource: DataSource,
                 isFirstResource: Boolean
             ): Boolean {
                 paletteStatusBar(resource)
@@ -132,11 +129,7 @@ class GalleryFragment : BaseFragment() {
             mostPopularSwatch?.let { swatch ->
                 val luminance = ColorUtils.calculateLuminance(swatch.rgb)
                 // 当luminance小于0.5时，我们认为这是一个深色值.
-                if (luminance < 0.5) {
-                    viewModel.updateImmersionBar(false)
-                } else {
-                    viewModel.updateImmersionBar(true)
-                }
+                LogUtil.d(TAG, "luminance:$luminance")
             }
             it.lightVibrantSwatch?.rgb?.let { rgb ->
                 binding.btUpdatePicture.setBackgroundColor(rgb)

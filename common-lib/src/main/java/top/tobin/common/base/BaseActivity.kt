@@ -3,23 +3,14 @@ package top.tobin.common.base
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import com.gyf.immersionbar.ktx.immersionBar
 
 open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        immersionBar {
-            statusBarColor(android.R.color.transparent)
-            navigationBarColor(android.R.color.transparent)
-            statusBarDarkFont(true)
-        }
     }
 
     private fun setStatusBarsAndNavigationBar() {

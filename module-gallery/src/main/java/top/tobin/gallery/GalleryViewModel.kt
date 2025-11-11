@@ -23,7 +23,6 @@ sealed class GalleryUiState {
     data object Idle : GalleryUiState()
     data class Loading(val isLoading: Boolean) : GalleryUiState()
     data class BingModels(val bingModel: BingModel) : GalleryUiState()
-    data class ImmersionBar(val statusBarDarkFont: Boolean) : GalleryUiState()
 }
 
 @HiltViewModel
@@ -40,10 +39,6 @@ class GalleryViewModel @Inject constructor(
 
     init {
         updatePicture()
-    }
-
-    fun updateImmersionBar(statusBarDarkFont: Boolean) {
-        _uiState.value = GalleryUiState.ImmersionBar(statusBarDarkFont)
     }
 
     fun updatePicture() {

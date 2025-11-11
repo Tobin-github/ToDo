@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import top.tobin.common.viewbinding.binding
 import dagger.hilt.android.AndroidEntryPoint
 import top.tobin.common.base.BaseFragment

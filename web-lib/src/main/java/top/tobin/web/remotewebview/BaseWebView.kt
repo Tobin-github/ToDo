@@ -84,11 +84,7 @@ open class BaseWebView : WebView, WebviewTouch {
 
     private fun wrapCallback(callback: ActionMode.Callback): ActionMode.Callback {
         return mCustomCallback?.let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                CallbackWrapperM(mCustomCallback!!, callback)
-            } else {
-                CallbackWrapperBase(mCustomCallback!!, callback)
-            }
+            CallbackWrapperM(mCustomCallback!!, callback)
         } ?: run() {
             callback
         }
@@ -98,33 +94,6 @@ open class BaseWebView : WebView, WebviewTouch {
         this.mCustomCallback = callback
     }
 
-    private class CallbackWrapperBase(
-        private val mWrappedCustomCallback: ActionMode.Callback,
-        private val mWrappedSystemCallback: ActionMode.Callback
-    ) : ActionMode.Callback {
-        override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-            return mWrappedCustomCallback.onCreateActionMode(mode, menu)
-        }
-
-        override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-            return mWrappedCustomCallback.onPrepareActionMode(mode, menu)
-        }
-
-        override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-            return mWrappedCustomCallback.onActionItemClicked(mode, item)
-        }
-
-        override fun onDestroyActionMode(mode: ActionMode) {
-            try {
-                mWrappedCustomCallback.onDestroyActionMode(mode)
-                mWrappedSystemCallback.onDestroyActionMode(mode)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
     private class CallbackWrapperM(
         private val mWrappedCustomCallback: ActionMode.Callback,
         private val mWrappedSystemCallback: ActionMode.Callback

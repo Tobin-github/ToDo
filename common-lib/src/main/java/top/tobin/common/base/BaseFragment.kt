@@ -14,7 +14,7 @@ open class BaseFragment : Fragment() {
         setStatusBarDarkFont(true)
     }
 
-    protected fun setOnApplyWindowInsets(rootView : View) {
+    protected fun setOnApplyWindowInsets(rootView: View) {
         ViewCompat.setOnApplyWindowInsetsListener(rootView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
