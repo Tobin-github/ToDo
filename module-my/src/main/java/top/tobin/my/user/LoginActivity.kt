@@ -6,10 +6,8 @@ import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

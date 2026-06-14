@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.metrics.performance.JankStats
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.gyf.immersionbar.ktx.immersionBar
 import dagger.hilt.android.AndroidEntryPoint
 import top.tobin.navigation.tab.NavigationController
 import top.tobin.navigation.tab.item.BaseTabItem
@@ -72,13 +71,7 @@ class MainTableActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBottomNavigation()
-
         initJankStats()
-
-        immersionBar {
-            statusBarColor(android.R.color.transparent)
-            navigationBarColor(android.R.color.transparent)
-        }
     }
 
     /**

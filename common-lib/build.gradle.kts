@@ -92,9 +92,6 @@ dependencies {
     api(libs.android.auto.size)
     // https://github.com/airbnb/lottie-android
     api(libs.lottie)
-    // https://github.com/gyf-dev/ImmersionBar
-    api(libs.immersionbar)
-    api(libs.immersionbar.ktx)
     api(libs.mmkv)
 
 }

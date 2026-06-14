@@ -39,7 +39,6 @@ leakcanary = "2.14"
 retrofit2 = "2.9.0"
 okhttp3 = "4.10.0"
 lottie = "6.6.7"
-immersionbar = "3.0.0"
 mmkv = "2.2.2"
 baseRecyclerViewAdapterHelper4 = "4.1.4"
 bcpkixJdk15on = "1.67"
@@ -135,8 +134,6 @@ okhttp3-logging-interceptor = { module = "com.squareup.okhttp3:logging-intercept
 
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
 android-auto-size = { module = "com.github.JessYanCoding:AndroidAutoSize", version.ref = "autoSize" }
-immersionbar = { module = "com.gyf.immersionbar:immersionbar", version.ref = "immersionbar" }
-immersionbar-ktx = { module = "com.gyf.immersionbar:immersionbar-ktx", version.ref = "immersionbar" }
 mmkv = { module = "com.tencent:mmkv-static", version.ref = "mmkv" }
 baseRecyclerViewAdapterHelper4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version.ref = "baseRecyclerViewAdapterHelper4" }
 bcpkix-jdk15on = { module = "org.bouncycastle:bcpkix-jdk15on", version.ref = "bcpkixJdk15on" }

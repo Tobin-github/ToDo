@@ -42,6 +42,8 @@ find_library( # Sets the name of the path variable.
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 # 指定CMake应链接到目标库的库。您可以链接多个库，例如在此生成脚本中定义的库、预生成的第三方库或系统库
+target_link_options(libtest PRIVATE -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384)
+
 target_link_libraries( # Specifies the target library.
         libtest
 

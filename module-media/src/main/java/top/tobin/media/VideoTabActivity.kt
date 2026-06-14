@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.viewpager2.widget.ViewPager2
-import com.gyf.immersionbar.ktx.immersionBar
 import top.tobin.media.databinding.ActivityVideoTabBinding
 
 class VideoTabActivity : AppCompatActivity() {
@@ -20,10 +19,6 @@ class VideoTabActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityVideoTabBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        immersionBar {
-            statusBarDarkFont(false)
-            statusBarColor(android.R.color.black)
-        }
         binding.vpVideoTab.adapter = mVideoPagerAdapter
 
         binding.vpVideoTab.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
