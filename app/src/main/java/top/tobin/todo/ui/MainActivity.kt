@@ -12,6 +12,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.metrics.performance.JankStats
@@ -87,6 +91,7 @@ class MainActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        applyWindowInsets()
         initBottomNavigation()
 //        checkPermission()
 //        initJankStats()
@@ -96,6 +101,16 @@ class MainActivity : BaseActivity() {
         super.onResume()
         postEvent(this, TestEvent("send by MainActivity to Dismiss xxx= with ActivityEvent"))
         postEvent(TestEvent("send by MainActivity to Dismiss xxx= with GlobalEvent"))
+    }
+
+    private fun applyWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val navBarHeight = insets.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom
+            binding.pageTab.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                bottomMargin = navBarHeight
+            }
+            insets
+        }
     }
 
     /**
