@@ -30,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.toVersion(rootProject.extra["java_version"] as Int)
+        targetCompatibility = JavaVersion.toVersion(rootProject.extra["java_version"] as Int)
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = (rootProject.extra["java_version"] as Int).toString()
     }
     buildFeatures {
         compose = true

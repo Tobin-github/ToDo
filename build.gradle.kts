@@ -13,3 +13,4 @@ plugins {
 extra["sdk_min_version"] = 24
 extra["sdk_target_version"] = 35
 extra["sdk_compile_version"] = 35
+extra["java_version"] = 11
