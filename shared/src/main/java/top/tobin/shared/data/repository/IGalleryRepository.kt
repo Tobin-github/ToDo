@@ -2,8 +2,7 @@ package top.tobin.shared.data.repository
 
 import top.tobin.shared.data.remote.DataResult
 import kotlinx.coroutines.flow.Flow
-import top.tobin.shared.model.BingModel
-import top.tobin.shared.model.UserModel
+import top.tobin.shared.model.LocalPhoto
 
 /**
  * Created by Tobin
@@ -12,7 +11,6 @@ import top.tobin.shared.model.UserModel
  */
 interface IGalleryRepository {
 
-    suspend fun fetchRandPicture(): Flow<DataResult<BingModel>>
-
+    suspend fun fetchLocalPhotos(): Flow<DataResult<List<LocalPhoto>>>
 
 }

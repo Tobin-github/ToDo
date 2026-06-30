@@ -14,3 +14,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+/.idea/AndroidProjectSystem.xml
+/.idea/deviceManager.xml
+/.idea/markdown.xml
+/.idea/runConfigurations.xml
+/.omo/run-continuation/ses_0e932095bffecg6V58MwnrKXQT.json
+/AGENTS.md

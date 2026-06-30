@@ -16,7 +16,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import top.tobin.common.utils.LogUtil
 import top.tobin.shared.data.remote.AccountingInterface
-import top.tobin.shared.data.remote.BingInterface
 import top.tobin.shared.data.remote.ParamsV3Interceptor
 import top.tobin.shared.data.remote.ScheduleInterface
 import top.tobin.shared.data.remote.UserInterface
@@ -89,17 +88,6 @@ object NetWorkModule {
     @Singleton
     fun provideScheduleService(retrofit: Retrofit): ScheduleInterface {
         return retrofit.create(ScheduleInterface::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideBingService(okHttpClient: OkHttpClient): BingInterface {
-        return Retrofit.Builder()
-            .client(okHttpClient)
-            .baseUrl("https://api.vvhan.com/")
-            .addConverterFactory(JsonConverterFactory.create())
-            .build()
-            .create(BingInterface::class.java)
     }
 
     @Provides

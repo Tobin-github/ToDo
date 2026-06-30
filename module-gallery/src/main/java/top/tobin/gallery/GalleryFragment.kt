@@ -1,39 +1,55 @@
 package top.tobin.gallery
 
-import android.graphics.Bitmap
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.graphics.ColorUtils
+import androidx.recyclerview.widget.RecyclerView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.palette.graphics.Palette
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import top.tobin.common.base.BaseFragment
-import top.tobin.common.ui.LoadingDialog
-import top.tobin.common.utils.LogUtil
-import top.tobin.gallery.databinding.FragmentGalleryBinding
 import top.tobin.common.viewbinding.binding
+import top.tobin.gallery.databinding.FragmentGalleryBinding
 
+/**
+ * Created by Tobin
+ * Email: junbin.li@qq.com
+ * Description: 相册 Fragment，展示手机本地图片.
+ */
 @AndroidEntryPoint
 class GalleryFragment : BaseFragment() {
 
     private val binding: FragmentGalleryBinding by binding()
     private val viewModel: GalleryViewModel by viewModels()
 
+    private val galleryAdapter = GalleryAdapter()
+
     companion object {
         @JvmStatic
         fun newInstance() = GalleryFragment()
         val TAG: String = GalleryFragment::class.java.simpleName
+    }
+
+    private val permissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            viewModel.loadPhotos()
+        } else {
+            binding.tvEmpty.text = "需要存储权限才能读取图片"
+            binding.tvEmpty.visibility = View.VISIBLE
+        }
     }
 
     override fun onCreateView(
@@ -44,97 +60,88 @@ class GalleryFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initClickListener()
+        initRecyclerView()
         observeUiState()
+        checkPermissionAndLoad()
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    private fun initClickListener() {
-        binding.btUpdatePicture.setOnClickListener {
-            LogUtil.e("=========== initClickListener")
-            viewModel.updatePicture()
+    private fun initRecyclerView() {
+        binding.rvGallery.apply {
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            adapter = galleryAdapter
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                private val spacing = 2.dpToPx()
+                override fun getItemOffsets(
+                    outRect: Rect, view: View,
+                    parent: RecyclerView, state: RecyclerView.State
+                ) {
+                    outRect.set(spacing, spacing, spacing, spacing)
+                }
+            })
+        }
+        galleryAdapter.setOnItemClickListener { _, position ->
+            val photos =
+                (viewModel.uiState.value as? GalleryUiState.Photos)?.photos
+                    ?: return@setOnItemClickListener
+            val intent = Intent(requireContext(), PhotoViewerActivity::class.java).apply {
+                putParcelableArrayListExtra(PhotoViewerActivity.EXTRA_PHOTOS, ArrayList(photos))
+                putExtra(PhotoViewerActivity.EXTRA_POSITION, position)
+            }
+            startActivity(intent)
         }
     }
 
     private fun observeUiState() {
         lifecycleScope.launch {
-            viewModel.uiState.collectLatest {
-                when (it) {
-                    GalleryUiState.Idle -> {
-
-                    }
-
-                    is GalleryUiState.BingModels -> {
-                        LogUtil.d(TAG, "randPicture: ${it.bingModel}")
-                        binding.tvTestContent.text = it.bingModel.title
-                        loadPicture(it.bingModel.url, binding.ivRandPicture)
+            viewModel.uiState.collectLatest { state ->
+                when (state) {
+                    is GalleryUiState.Idle -> {
+                        binding.pbLoading.visibility = View.GONE
                     }
 
                     is GalleryUiState.Loading -> {
-                        activity?.let { ac ->
-                            if (it.isLoading) {
-                                LoadingDialog.instance.showLoading(ac, "图片加载中...")
-                            } else {
-                                LoadingDialog.instance.dismissLoading()
-                            }
-                        } ?: kotlin.run {
-                            LogUtil.e("SwitchLoading activity is null")
+                        binding.pbLoading.visibility =
+                            if (state.isLoading) View.VISIBLE else View.GONE
+                    }
+
+                    is GalleryUiState.Photos -> {
+                        binding.pbLoading.visibility = View.GONE
+                        if (state.photos.isEmpty()) {
+                            binding.tvEmpty.text = "暂无图片"
+                            binding.tvEmpty.visibility = View.VISIBLE
+                        } else {
+                            binding.tvEmpty.visibility = View.GONE
+                            galleryAdapter.submitList(state.photos)
                         }
+                    }
+
+                    is GalleryUiState.Error -> {
+                        binding.pbLoading.visibility = View.GONE
+                        binding.tvEmpty.text = state.message
+                        binding.tvEmpty.visibility = View.VISIBLE
                     }
                 }
             }
         }
-
     }
 
-    private fun loadPicture(url: String, imageView: ImageView) {
-        Glide.with(this).asBitmap().load(url).listener(object : RequestListener<Bitmap> {
-            override fun onLoadFailed(
-                e: GlideException?, model: Any?, target: Target<Bitmap>, isFirstResource: Boolean
-            ): Boolean {
-                return false
-            }
+    private fun Int.dpToPx(): Int =
+        (this * requireContext().resources.displayMetrics.density).toInt()
 
-            override fun onResourceReady(
-                resource: Bitmap,
-                model: Any,
-                target: Target<Bitmap>?,
-                dataSource: DataSource,
-                isFirstResource: Boolean
-            ): Boolean {
-                paletteStatusBar(resource)
-                return false
-            }
-        }).into(binding.ivRandPicture)
-    }
+    private fun checkPermissionAndLoad() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
 
-    private fun paletteStatusBar(bitmap: Bitmap) {
-        Palette.from(bitmap).generate {
-            if (it == null) {
-                return@generate
-            }
-            var mostPopularSwatch: Palette.Swatch? = null
-            for (swatch in it.swatches) {
-                if (mostPopularSwatch == null || swatch.population > mostPopularSwatch.population) {
-                    mostPopularSwatch = swatch
-                }
-            }
-            mostPopularSwatch?.let { swatch ->
-                val luminance = ColorUtils.calculateLuminance(swatch.rgb)
-                // 当luminance小于0.5时，我们认为这是一个深色值.
-                LogUtil.d(TAG, "luminance:$luminance")
-            }
-            it.lightVibrantSwatch?.rgb?.let { rgb ->
-                binding.btUpdatePicture.setBackgroundColor(rgb)
-            }
+        if (ContextCompat.checkSelfPermission(
+                requireContext(), permission
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            viewModel.loadPhotos()
+        } else {
+            permissionLauncher.launch(permission)
         }
     }
-
 }

@@ -1,10 +1,10 @@
 package top.tobin.shared.data
 
+import android.content.Context
 import top.tobin.shared.data.local.AppDataBase
 import top.tobin.shared.data.mapper.UserEntity2UserModelMapper
 import top.tobin.shared.data.mapper.UserModel2UserEntityMapper
 import top.tobin.shared.data.remote.AccountingInterface
-import top.tobin.shared.data.remote.BingInterface
 import top.tobin.shared.data.remote.ScheduleInterface
 
 import top.tobin.shared.data.remote.UserInterface
@@ -37,10 +37,9 @@ object RepositoryFactory {
             db,
         )
 
-    fun makeGalleryRepository(api: BingInterface, db: AppDataBase): IGalleryRepository =
+    fun makeGalleryRepository(context: Context): IGalleryRepository =
         GalleryRepository(
-            api,
-            db,
+            context,
         )
 
     fun makeAccountingRepository(api: AccountingInterface, db: AppDataBase): IAccountingRepository =

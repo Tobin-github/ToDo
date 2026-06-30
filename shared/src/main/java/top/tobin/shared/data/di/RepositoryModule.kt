@@ -1,5 +1,6 @@
 package top.tobin.shared.data.di
 
+import android.content.Context
 import top.tobin.shared.data.RepositoryFactory
 import top.tobin.shared.data.local.AppDataBase
 import top.tobin.shared.data.remote.UserInterface
@@ -7,9 +8,9 @@ import top.tobin.shared.data.repository.IUserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import top.tobin.shared.data.remote.AccountingInterface
-import top.tobin.shared.data.remote.BingInterface
 import top.tobin.shared.data.remote.ScheduleInterface
 import top.tobin.shared.data.repository.IAccountingRepository
 import top.tobin.shared.data.repository.IGalleryRepository
@@ -46,10 +47,9 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideGalleryRepository(
-        api: BingInterface,
-        db: AppDataBase
+        @ApplicationContext context: Context
     ): IGalleryRepository {
-        return RepositoryFactory.makeGalleryRepository(api, db)
+        return RepositoryFactory.makeGalleryRepository(context)
     }
 
     @Singleton
